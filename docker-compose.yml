@@ -1,0 +1,72 @@
+version: "3"
+
+networks:
+  symfony_core:
+    external: true
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/services/app/Dockerfile
+    depends_on:
+      - database
+    networks:
+      - symfony_core
+    volumes:
+      - .:/app
+      - app_cache:/app/var/cache
+    labels:
+      - "traefik.enable=false"
+  database:
+    build:
+      context: .
+      dockerfile: ./docker/services/database/Dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=5ecr3t
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - symfony_core
+    volumes:
+      - app_database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.1
+    depends_on:
+      - database
+    environment:
+      - PMA_HOST=database
+      - PMA_USER=${DB_USERNAME}
+      - PMA_PASSWORD=${DB_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=symfony_core"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_pma.rule=Host(`pma.dev.symfony.local`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_pma.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_pma.tls=true"
+    networks:
+      - symfony_core
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/services/web/Dockerfile
+    depends_on:
+      - app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=symfony_core"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_web.rule=Host(`dev.symfony.local`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_web.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_web.tls=true"
+    networks:
+      - symfony_core
+    volumes:
+      - ./public:/app/public
+
+volumes:
+  app_cache:
+  app_database:

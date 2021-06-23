@@ -5,6 +5,12 @@ COMPOSER 		= $(PHP) /usr/bin/composer
 CONSOLE 		= $(PHP) bin/console
 YARN 			= $(DOCKER_COMPOSE) run --rm -u node node yarn
 
+.DEFAULT_GOAL := help
+
+help:
+	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+.PHONY: help
+
 ##
 ## Docker stack
 ## -------
@@ -18,8 +24,11 @@ docker-compose:
 	@$(DOCKER_COMPOSE) ${c}
 
 down: 						## Kill and removes containers and volumes
-	@$(DOCKER_COMPOSE) kill
-	@$(DOCKER_COMPOSE) down -v --remove-orphans
+	@read -r -p "Are you sure ? [Y/n] " -n 1 input; \
+	if [[ $$input =~ ^[Y]$$ ]]; then \
+	  $(DOCKER_COMPOSE) kill; \
+	  $(DOCKER_COMPOSE) down -v --remove-orphans; \
+	fi
 
 install: build up 			## Initialize and start project
 
@@ -34,12 +43,6 @@ up:							## Start project containers
 	@$(PHP) -r 'echo "Waiting for initial installation ..."; for(;;) { if (false === file_exists("/tmp/DOING_COMPOSER_INSTALL")) { echo " Ready !\n"; break; }}'
 
 .PHONY: build clean docker-compose down install stop up
-
-.DEFAULT_GOAL := help
-
-help:
-	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
-.PHONY: help
 
 ##
 ## Application

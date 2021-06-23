@@ -1,5 +1,5 @@
 FROM        php:8.0-fpm-alpine
-MAINTAINER  Arnaud Ponel <arnaud@xpressive.io>
+LABEL       maintainer="Arnaud Ponel <arnaud@xpressive.io>"
 
 RUN         apk add --no-cache \
             --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \

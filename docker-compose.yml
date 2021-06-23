@@ -34,6 +34,18 @@ services:
       - symfony_core
     volumes:
       - app_database:/var/lib/mysql
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/services/node/Dockerfile
+    command: ["yarn", "run", "build"]
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - symfony_core
+    user: node
+    volumes:
+      - .:/app
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.1
     depends_on:

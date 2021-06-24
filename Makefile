@@ -49,6 +49,9 @@ up:							## Start project containers
 ## -------
 ##
 
+assets: 					## Compile frontend assets using Webpack in node container
+	@$(DOCKER_COMPOSE) run --rm -u node node
+
 cache:  					## Reset app cache
 	@$(CONSOLE) ca:cl
 	@$(CONSOLE) ca:wa
@@ -59,7 +62,10 @@ composer: 					## Shortcut to use Composer within project app container (ex : ma
 console:					## Execute command in Symfony console (ex : make console c="ca:cl")
 	@$(CONSOLE) ${c}
 
-.PHONY: cache composer console
+yarn: 						## Shortcut to use Yarn container (ex : make yarn c="add bootstrap")
+	@$(YARN) ${c}
+
+.PHONY: cache composer console yarn
 
 ##
 ## Tests & QA

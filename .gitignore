@@ -1,4 +1,7 @@
-
+###> Application ###
+/public/dist/*
+!/public/dist/.gitkeep
+###< Application ###
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

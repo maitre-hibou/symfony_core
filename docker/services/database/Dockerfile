@@ -1,5 +1,5 @@
 FROM        mysql:8.0
-MAINTAINER  Arnaud Ponel <arnaud@xpressive.io>
+LABEL       maintainer="Arnaud Ponel <arnaud@xpressive.io>"
 
 RUN         usermod -u 1000 mysql
 RUN         groupmod -g 1000 mysql

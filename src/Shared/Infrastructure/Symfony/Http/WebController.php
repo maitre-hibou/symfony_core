@@ -2,9 +2,9 @@
 
 namespace App\Shared\Infrastructure\Symfony\Http;
 
+use App\Shared\Infrastructure\Http\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use App\Shared\Infrastructure\Http\Controller;
 
 interface WebController extends Controller
 {

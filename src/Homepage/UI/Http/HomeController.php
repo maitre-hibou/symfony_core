@@ -4,9 +4,9 @@ namespace App\Homepage\UI\Http;
 
 use App\Homepage\Application\Find\RandomQuoteQuery;
 use App\Homepage\Application\Find\RandomQuoteResponse;
+use App\Shared\UI\Http\WebController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Shared\UI\Http\WebController;
 
 final class HomeController extends WebController
 {

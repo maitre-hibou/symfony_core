@@ -2,8 +2,8 @@
 
 namespace App\Shared\Infrastructure;
 
-use Ramsey\Uuid\Uuid;
 use App\Shared\Domain\UuidGenerator;
+use Ramsey\Uuid\Uuid;
 
 final class RamseyUuidGenerator implements UuidGenerator
 {

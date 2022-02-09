@@ -2,9 +2,9 @@
 
 namespace App\Shared\Domain\Bus\Event;
 
-use DateTimeImmutable;
 use App\Shared\Domain\Utils\Dates;
 use App\Shared\Domain\ValueObject\Uuid;
+use DateTimeImmutable;
 
 abstract class DomainEvent
 {

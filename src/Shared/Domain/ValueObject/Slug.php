@@ -3,7 +3,6 @@
 namespace App\Shared\Domain\ValueObject;
 
 use App\Shared\Domain\Utils\Strings;
-use App\Shared\Domain\ValueObject\StringValueObject;
 
 abstract class Slug extends StringValueObject
 {

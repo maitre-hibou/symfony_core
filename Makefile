@@ -1,7 +1,6 @@
-DOCKER_COMPOSE 	= docker compose
-PHP 			= $(DOCKER_COMPOSE) exec -u www-data app php
+PHP 			= docker compose exec -u www-data app php
 COMPOSER 		= $(PHP) /usr/bin/composer
-NODE 			= $(DOCKER_COMPOSE) run --rm -u node node
+NODE 			= docker compose run --rm -u node node
 YARN  			= $(NODE) yarn
 
 .DEFAULT_GOAL := help
@@ -16,23 +15,23 @@ help:
 ##
 
 build: 					 	## Build project images
-	@$(DOCKER_COMPOSE) pull --parallel --quiet --ignore-pull-failures 2> /dev/null
-	@$(DOCKER_COMPOSE) build --pull
+	@docker compose pull --parallel --quiet --ignore-pull-failures 2> /dev/null
+	@docker compose build --pull
 
 dc: 						## Shortcut to docker compose command (ex : make dc c="logs -f")
-	@$(DOCKER_COMPOSE) ${c}
+	@docker compose ${c}
 
 down: 						## Kill and removes containers and volumes
-	@$(DOCKER_COMPOSE) kill
-	@$(DOCKER_COMPOSE) down -v --remove-orphans
+	@docker compose kill
+	@docker compose down -v --remove-orphans
 
 install: build up 			## Initialize and start project
 
 logs:						## Show project containers logs
-	@$(DOCKER_COMPOSE) logs -f ${c}
+	@docker compose logs -f ${c}
 
 up:							## Start project containers
-	@$(DOCKER_COMPOSE) up -d --force-recreate
+	@docker compose up -d --force-recreate
 	@$(PHP) -r 'echo "Waiting for initial installation ..."; for(;;) { if (false === file_exists("/tmp/DOING_COMPOSER_INSTALL")) { echo " Ready !\n"; break; }}'
 
 .PHONY: build clean dc down install up
@@ -61,11 +60,18 @@ yarn:  						## Shortcut to use Yarn within node container (ex : make yarn c="ad
 ## -------
 ##
 
-phpunit: 					## Run phpunit tests suite
-	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.xml.dist
+create_test_db:
+	@docker compose run --rm database sh -c 'mysql -hdatabase -uroot -p$${MYSQL_ROOT_PASSWORD} -e "DROP DATABASE IF EXISTS $${MYSQL_DATABASE}_test; CREATE DATABASE $${MYSQL_DATABASE}_test; GRANT ALL ON $${MYSQL_DATABASE}_test.* TO \"$${MYSQL_USER}\""'
+	@docker compose run --rm -e APP_ENV=test app sh -c 'php -d memory_limit=-1 bin/console --no-interaction doctrine:schema:update --force --dump-sql'
+
+phpcs: 						## Run PHPCS QA
+	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --config=config/.php_cs.dist.php --dry-run --diff --verbose --allow-risky=yes
+
+phpunit: create_test_db		## Run phpunit tests suite
+	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.xml.dist
 
 psalm: 						## Run Psalm static code analysis
-	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml ${c}
+	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml ${c}
 
 tests: phpunit psalm 		## Run all tests and QA
 

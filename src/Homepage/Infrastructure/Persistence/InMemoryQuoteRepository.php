@@ -98,7 +98,7 @@ final class InMemoryQuoteRepository implements QuoteRepository
     public function random(): Quote
     {
         $data = $this->quotes[
-            $this->randomNumberGenerator->generate(0, sizeof($this->quotes) - 1)
+            $this->randomNumberGenerator->generate(0, count($this->quotes) - 1)
         ];
 
         $content = new QuoteContent($data['quote']);

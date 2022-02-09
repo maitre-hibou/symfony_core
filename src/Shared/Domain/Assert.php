@@ -3,7 +3,6 @@
 namespace App\Shared\Domain;
 
 use InvalidArgumentException;
-use function Lambdish\Phunctional\instance_of;
 
 final class Assert
 {
@@ -16,7 +15,7 @@ final class Assert
 
     public static function instanceOf(string $className, mixed $item): void
     {
-        if (false === call_user_func(instance_of($className), $item)) {
+        if (false === ($item instanceof $className)) {
             throw new InvalidArgumentException(sprintf('Object <%s> is not an instance of <%s>', get_class($item), $className));
         }
     }

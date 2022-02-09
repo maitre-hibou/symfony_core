@@ -11,6 +11,8 @@
 /public/bundles/
 /var/cache/*
 !/var/cache/.gitkeep
+/var/log/*
+!/var/log/.gitkeep
 /vendor/*
 !/vendor/.gitkeep
 ###< symfony/framework-bundle ###

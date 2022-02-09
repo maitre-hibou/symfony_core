@@ -2,6 +2,7 @@
 
 namespace App\Shared\Infrastructure\Symfony\DependencyInjection;
 
+use App\Shared\Domain\Utils\Paths;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
@@ -31,7 +32,7 @@ final class DomainYamlConfigLoader
     {
         $files = glob($pattern, $flags);
         foreach (glob(\dirname($pattern).'/*', GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
-            $files = array_merge($files, self::recursiveGlob($dir.'/'.basename($pattern), $flags));
+            $files = array_merge($files, self::recursiveGlob($dir.'/'.Paths::basename($pattern), $flags));
         }
 
         return $files;

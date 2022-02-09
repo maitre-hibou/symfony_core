@@ -22,7 +22,7 @@ final class Kernel extends BaseKernel
         $container->import($configDir.'/{packages}/*.yaml');
         $container->import($configDir.'/{packages}/'.$this->environment.'/*.yaml');
 
-        if (is_file($configDir.'/services.yaml')) {
+        if (file_exists($configDir.'/services.yaml')) {
             $container->import($configDir.'/services.yaml');
             $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
         } else {
@@ -39,7 +39,7 @@ final class Kernel extends BaseKernel
         $routes->import($configDir.'/{routes}/'.$this->environment.'/*.yaml');
         $routes->import($configDir.'/{routes}/*.yaml');
 
-        if (is_file($configDir.'/routes.yaml')) {
+        if (file_exists($configDir.'/routes.yaml')) {
             $routes->import($configDir.'/routes.yaml');
         } else {
             $routes->import($configDir.'/{routes}.php');

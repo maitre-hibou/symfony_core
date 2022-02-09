@@ -1,0 +1,26 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  _instanceof:
+    App\Shared\Infrastructure\Http\Controller:
+      tags: [ controller.service_arguments ]
+
+  App\Homepage\:
+    resource: '%kernel.project_dir%/src/Homepage'
+    exclude:
+      - '%kernel.project_dir%/src/Homepage/UI/Resources'
+
+  App\Homepage\Domain\QuoteRepository:
+    class: App\Homepage\Infrastructure\Persistence\InMemoryQuoteRepository
+
+  App\Homepage\Application\Find\RandomQuoteQueryHandler:
+    tags:
+      - { name: messenger.message_handler, handles: App\Homepage\Application\Find\RandomQuoteQuery }
+
+twig:
+  paths:
+    '%kernel.project_dir%/src/Homepage/UI/Resources/templates': 'Homepage'

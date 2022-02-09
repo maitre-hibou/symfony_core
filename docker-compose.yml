@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/services/app/Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_app.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_app.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_app.tls=true"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=8000"
+    volumes:
+      - .:/app
+      - app_cache:/app/var/cache
+  database:
+    build:
+      context: .
+      dockerfile: .docker/services/database/Dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=5ecr3t
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    labels:
+      - "traefik.enable=false"
+    volumes:
+      - app_database:/var/lib/mysql
+  node:
+    build:
+      context: .
+      dockerfile: .docker/services/node/Dockerfile
+    command: ["yarn"]
+    labels:
+      - "traefik.enable=false"
+    user: node
+    volumes:
+      - .:/app
+  proxy:
+    build:
+      context: .
+      dockerfile: .docker/services/proxy/Dockerfile
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  app_cache:
+  app_database:

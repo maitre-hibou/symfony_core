@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<header class="container py-3 py-lg-4">
+    <h1 class="d-flex justify-content-between">
+        <span>Create a post</span>
+        <ul class="nav">
+            <li class="nav-item"><a href="{{ safe_url('blog') ?: '#' }}" class="btn btn-secondary btn-sm">Back</a></li>
+        </ul>
+    </h1>
+    <hr>
+</header>
+
+<section class="container">
+    <form class="row g-5">
+        <div class="col-md-8">
+            <div class="mb-3">
+                <input type="text" name="post[title]" class="form-control form-control-lg" id="createPostTitle" placeholder="Post title">
+            </div>
+            <div class="mb-3">
+                <textarea rows="8" name="post[content]" class="form-control form-control-lg" id="createPostContent" placeholder="Insert your content here ..."></textarea>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="position-sticky pt-3" style="top: 3.5rem;">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="fst-italic">About</h4>
+                    <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p>
+                </div>
+
+                <div class="d-grid">
+                    <button type="button" class="btn btn-success btn-lg btn-block">Create post</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+{% endblock %}

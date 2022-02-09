@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Shared\UI\Http;
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
+use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Domain\Bus\Query\QueryBus;
+use App\Shared\Infrastructure\Symfony\Http\WebController as WebControllerInterface;
+
+abstract class WebController extends AbstractController implements WebControllerInterface
+{
+    public function __construct(
+        private Environment $twig,
+        private RouterInterface $router,
+        QueryBus $queryBus,
+        CommandBus $commandBus
+    ) {
+        parent::__construct($queryBus, $commandBus);
+    }
+
+    public function render(string $templateName, array $arguments = []): Response
+    {
+        return new Response(
+            $this->twig->render($templateName, $arguments),
+            Response::HTTP_OK
+        );
+    }
+
+    public function redirectTo(string $routeName, array $routeParams = [], int $redirectStatus = Response::HTTP_FOUND): RedirectResponse
+    {
+        return new RedirectResponse($this->router->generate($routeName, $routeParams), $redirectStatus);
+    }
+}

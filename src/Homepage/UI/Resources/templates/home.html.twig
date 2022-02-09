@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title %}Hello World ! | {{ parent() }}{% endblock %}
+
+{% block page_styles %}
+    <style>
+        .product-device {
+            position: absolute;
+            right: 10%;
+            bottom: -10%;
+            width: 300px;
+            height: 540px;
+            background-color: #333;
+            border-radius: 21px;
+            transform: rotate(30deg);
+        }
+
+        .product-device::before {
+            position: absolute;
+            top: 10%;
+            right: 10px;
+            bottom: 10%;
+            left: 10px;
+            content: "";
+            background-color: rgba(255, 255, 255, .1);
+            border-radius: 5px;
+        }
+
+        .product-device-2 {
+            top: -15%;
+            right: auto;
+            bottom: 0;
+            left: 5%;
+            background-color: #e5e5e5;
+        }
+    </style>
+{% endblock %}
+
+{% block body_class 'cover bg-light' %}
+
+{% block content %}
+<div class="d-flex align-self-center flex-column col-md-5 mx-auto p-lg-5">
+    <svg class="d-block mx-auto mb-1" style="fill: #0dcaf0 !important;" width="72" height="72"><use xlink:href="#symfony"></use></svg>
+    <h1 class="display-5 fw-bold text-center">Hello World !</h1>
+    <div class="col-lg-10 mx-auto">
+        <div class="d-flex flex-column justify-content-center align-items-center mx-auto">
+            <div class="img-thumbnail d-flex justify-content-center me-3" style="width: 100px; height: 100px;overflow:hidden; border-radius: 50%">
+                <img class="d-flex align-self-center" src="{{quote.avatar.value}}" alt="{{quote.by}}" height="150">
+            </div>
+            <figure class="d-flex align-self-center flex-column text-center mb-0">
+                <blockquote class="blockquote">
+                  <p class="lead mb-0"><i>{{quote.content}}</i></p>
+                </blockquote>
+                <figcaption class="blockquote-footer mb-0"><i>{{quote.by}}</i></figcaption>
+              </figure>
+        </div>
+    </div>
+</div>
+<div class="product-device shadow-sm d-none d-md-block"></div>
+<div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+{% endblock %}

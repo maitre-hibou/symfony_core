@@ -1,0 +1,26 @@
+###> Frontend ###
+/public/dist/*
+!/public/dist/.gitkeep
+###< Frontend ###
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/cache/*
+!/var/cache/.gitkeep
+/vendor/*
+!/vendor/.gitkeep
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###

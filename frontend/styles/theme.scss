@@ -1,0 +1,53 @@
+@import "variables";
+
+@import "~bootstrap/scss/bootstrap";
+
+h1, h2, h3 {
+  font-weight: bold;
+}
+
+.navbar-nav {
+  .nav-item {
+    .nav-link {
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.blog {
+  &-post {
+    margin-bottom: 4rem;
+  }
+
+  &-post-title {
+    margin-bottom: .25rem;
+    font-size: 2.5rem;
+  }
+
+  &-post-meta {
+    margin-bottom: 1.25rem;
+    color: $gray-500;
+  }
+}
+body {
+  padding-top: 3.5rem;
+
+  main {
+    position: relative;
+  }
+
+  &.cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    main {
+      height: 100%;
+      display: flex;
+      overflow: hidden;
+      flex-grow: 1;
+    }
+  }
+}

@@ -22,6 +22,8 @@ jobs:
     - stage: Testing
       script:
         - make phpunit
+    -
+      script:
         - make psalm
     - stage: Quality
       script:

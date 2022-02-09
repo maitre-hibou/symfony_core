@@ -1,0 +1,8 @@
+language: php
+os: linux
+dist: xenial
+jobs:
+  phpunit:
+    - run: make phpunit
+  psalm:
+    - run: make psalm

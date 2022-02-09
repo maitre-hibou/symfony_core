@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: .docker/services/app/Dockerfile
+    depends_on:
+      - database
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_app.entrypoints=websecure"

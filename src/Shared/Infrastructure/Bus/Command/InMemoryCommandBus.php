@@ -2,12 +2,12 @@
 
 namespace App\Shared\Infrastructure\Bus\Command;
 
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
-use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
-use Symfony\Component\Messenger\MessageBusInterface;
 use App\Shared\Domain\Bus\Command\Command;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Command\Exception\CommandNotRegisteredError;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class InMemoryCommandBus implements CommandBus
 {

@@ -9,6 +9,5 @@ final class InMemoryEventBus implements EventBus
 {
     public function publish(DomainEvent ...$events): void
     {
-
     }
 }

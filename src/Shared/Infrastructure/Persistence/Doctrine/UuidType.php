@@ -2,11 +2,11 @@
 
 namespace App\Shared\Infrastructure\Persistence\Doctrine;
 
-use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\StringType;
 use App\Shared\Domain\Utils\Strings;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Infrastructure\Doctrine\Dbal\CustomType;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\StringType;
 use function Lambdish\Phunctional\last;
 
 abstract class UuidType extends StringType implements CustomType

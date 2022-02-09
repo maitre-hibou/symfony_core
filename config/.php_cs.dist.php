@@ -13,6 +13,7 @@ return (new PhpCsFixer\Config())
         'strict_param' => true,
         'strict_comparison' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'phpdoc_to_comment' => false,
     ])
     ->setFinder($finder)
 ;

@@ -2,12 +2,12 @@
 
 namespace App;
 
+use App\Shared\Infrastructure\Symfony\DependencyInjection\DomainYamlConfigLoader;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use App\Shared\Infrastructure\Symfony\DependencyInjection\DomainYamlConfigLoader;
 
 final class Kernel extends BaseKernel
 {
@@ -16,8 +16,7 @@ final class Kernel extends BaseKernel
     protected function configureContainer(
         ContainerConfigurator $container,
         LoaderInterface $loader
-    ): void
-    {
+    ): void {
         $configDir = $this->getConfigDir();
 
         $container->import($configDir.'/{packages}/*.yaml');

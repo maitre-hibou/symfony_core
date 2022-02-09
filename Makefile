@@ -60,10 +60,14 @@ yarn:  						## Shortcut to use Yarn within node container (ex : make yarn c="ad
 ## -------
 ##
 
+create_test_db:
+	@docker compose run --rm database sh -c 'mysql -hdatabase -uroot -p$${MYSQL_ROOT_PASSWORD} -e "DROP DATABASE IF EXISTS $${MYSQL_DATABASE}_test; CREATE DATABASE $${MYSQL_DATABASE}_test; GRANT ALL ON $${MYSQL_DATABASE}_test.* TO \"$${MYSQL_USER}\""'
+	@docker compose run --rm -e APP_ENV=test app sh -c 'php -d memory_limit=-1 bin/console --no-interaction doctrine:schema:update --force --dump-sql'
+
 phpcs: 						## Run PHPCS QA
 	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --config=config/.php_cs.dist.php --dry-run --diff --verbose --allow-risky=yes
 
-phpunit: 					## Run phpunit tests suite
+phpunit: create_test_db		## Run phpunit tests suite
 	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.xml.dist
 
 psalm: 						## Run Psalm static code analysis

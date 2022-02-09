@@ -2,13 +2,13 @@
 
 namespace App\Shared\Infrastructure\Bus\Query;
 
-use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 use App\Shared\Domain\Bus\Query\Exception\QueryNotRegisteredError;
 use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\Response;
+use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class InMemoryQueryBus implements QueryBus
 {

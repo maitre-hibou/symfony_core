@@ -2,11 +2,10 @@
 
 namespace App\Shared\Domain\ValueObject;
 
+use App\Shared\Domain\Utils\Strings;
+use function Lambdish\Phunctional\reindex;
 use ReflectionClass;
 use Stringable;
-use App\Shared\Domain\Utils\Strings;
-
-use function Lambdish\Phunctional\reindex;
 
 abstract class Enum implements Stringable
 {
@@ -59,7 +58,7 @@ abstract class Enum implements Stringable
 
     private static function keysFormatter(): callable
     {
-        return static fn(mixed $unused, string $key): string => Strings::toCamelCase(strtolower($key));
+        return static fn (mixed $unused, string $key): string => Strings::toCamelCase(strtolower($key));
     }
 
     private function ensureIsBetweenAcceptedValues(mixed $value): void

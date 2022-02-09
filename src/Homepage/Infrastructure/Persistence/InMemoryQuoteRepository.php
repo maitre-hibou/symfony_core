@@ -102,8 +102,8 @@ final class InMemoryQuoteRepository implements QuoteRepository
         ];
 
         $content = new QuoteContent($data['quote']);
-        $by      = new QuoteBy($data['by']);
-        $avatar  = new QuoteAvatar($data['avatar']);
+        $by = new QuoteBy($data['by']);
+        $avatar = new QuoteAvatar($data['avatar']);
 
         return new Quote($content, $by, $avatar);
     }

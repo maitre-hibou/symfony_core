@@ -2,13 +2,13 @@
 
 namespace App\Shared\UI\Http;
 
+use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Domain\Bus\Query\QueryBus;
+use App\Shared\Infrastructure\Symfony\Http\WebController as WebControllerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
-use App\Shared\Domain\Bus\Command\CommandBus;
-use App\Shared\Domain\Bus\Query\QueryBus;
-use App\Shared\Infrastructure\Symfony\Http\WebController as WebControllerInterface;
 
 abstract class WebController extends AbstractController implements WebControllerInterface
 {

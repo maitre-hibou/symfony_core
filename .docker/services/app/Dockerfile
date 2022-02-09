@@ -21,7 +21,8 @@ RUN         docker-php-ext-enable amqp apcu opcache
 
 RUN         mkdir -p $COMPOSER_HOME
 RUN         chown -R www-data:www-data $COMPOSER_HOME
-RUN         cd /tmp && /build/install_composer.sh
+WORKDIR     /tmp
+RUN         /build/install_composer.sh
 
 RUN         mkdir -p /app
 COPY        --chown=www-data:www-data . /app

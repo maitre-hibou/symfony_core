@@ -32,5 +32,5 @@ EXPOSE      8000
 VOLUME      /app
 WORKDIR     /app
 
-ENTRYPOINT  ["dockerize", "--wait", "tcp://database:3306", "/build/entrypoint.sh"]
-CMD         ["symfony", "serve", "--port=8000"]
+ENTRYPOINT  ["/build/entrypoint.sh"]
+CMD         ["dockerize", "--wait", "tcp://database:3306", "-timeout", "30s", "symfony", "serve", "--port=8000"]

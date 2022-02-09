@@ -17,6 +17,12 @@ before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 install:
   - make install
-script:
-  - make phpunit
-  - make psalm
+jobs:
+  include:
+    - stage: Testing
+      script:
+        - make phpunit
+        - make psalm
+    - stage: Quality
+      script:
+        - make phpcs

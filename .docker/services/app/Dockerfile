@@ -7,7 +7,7 @@ ENV         COMPOSER_HOME=/usr/local/lib/composer
 RUN         echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sources.list.d/symfony-cli.list
 RUN         apt update && \
             apt install -y curl libcurl4-openssl-dev libicu-dev librabbitmq-dev libxml2-dev libzip-dev symfony-cli unzip wget zip
-RUN         curl -sfL $(curl -s https://api.github.com/repos/powerman/dockerize/releases/latest | grep -i /dockerize-$(uname -s)-$(uname -m)\" | cut -d\" -f4) | install /dev/stdin /usr/local/bin/dockerize
+RUN         curl -sfL "$(curl -s https://api.github.com/repos/powerman/dockerize/releases/latest | grep -i /dockerize-$(uname -s)-$(uname -m)\" | cut -d\" -f4)" | install /dev/stdin /usr/local/bin/dockerize
 
 RUN         usermod -u 1000 www-data && groupmod -g 1000 www-data
 

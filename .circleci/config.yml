@@ -1,0 +1,19 @@
+version: 2
+
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Building images
+          command: make build
+      - run:
+          name: Booting project
+          command: make install
+      - run:
+          name: Starting tests
+          command: make tests
+      - run:
+          name: Stopping project
+          command: make down

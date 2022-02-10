@@ -6,7 +6,7 @@ dist: focal
 before_install:
   - echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | sudo tee /etc/apt/sources.list.d/symfony-cli.list
   - sudo apt update
-  - sudo apt install libcurl3-openssl-dev librabbitmq-dev php-bcmath php-ctype php-curl php-dev php-intl php-opcache php-pdo php-pear php-simplexml php-zip symfony-cli
+  - sudo apt install -y libcurl3-openssl-dev librabbitmq-dev php-bcmath php-ctype php-curl php-dev php-intl php-opcache php-pdo php-pear php-simplexml php-zip symfony-cli
   - sudo pecl install amqp apcu
 install:
   - composer install

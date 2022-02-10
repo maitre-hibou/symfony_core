@@ -6,9 +6,11 @@ dist: focal
 before_install:
   - echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | sudo tee /etc/apt/sources.list.d/symfony-cli.list
   - sudo apt update
-  - sudo apt install php-ctype php-bcmath php-ctype php-curl php-intl php-opcache php-pdo php-simplexml php-zip symfony-cli
+  - sudo apt install librabbitmq-dev php-ctype php-bcmath php-ctype php-curl php-intl php-opcache php-pdo php-simplexml php-zip symfony-cli
+  - sudo pecl install amqp apcu
 install:
   - composer install
+  - symfony check:requirements
 jobs:
   include:
     - stage: Testing
@@ -17,6 +19,9 @@ jobs:
     -
       script:
         - php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml
+    - stage: Quality
+      script:
+        - php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --config=config/.php_cs.dist.php --dry-run --diff --verbose --allow-risky=yes
 # services:
 #   - docker
 # before_install:

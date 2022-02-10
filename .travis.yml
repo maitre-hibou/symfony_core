@@ -7,6 +7,8 @@ before_install:
   - echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | sudo tee /etc/apt/sources.list.d/symfony-cli.list
   - sudo apt update
   - sudo apt install php-ctype php-bcmath php-ctype php-curl php-intl php-opcache php-pdo php-simplexml php-zip symfony-cli
+install:
+  - composer install
 script:
   - symfony check:requirements
 # services:

@@ -14,7 +14,7 @@ jobs:
   include:
     - stage: Testing
       script:
-        - php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.xml.dist
+        - php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.dist.xml
     -
       script:
         - php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml

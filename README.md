@@ -4,6 +4,20 @@ Clean design development stack for Symfony applications.
 
 [![Build Status](https://app.travis-ci.com/maitre-hibou/symfony_core.svg?branch=master)](https://app.travis-ci.com/maitre-hibou/symfony_core)
 
+- [Symfony Core](#symfony-core)
+  - [Installation](#installation)
+    - [Prerequisites](#prerequisites)
+    - [Booting project](#booting-project)
+    - [Stopping and starting](#stopping-and-starting)
+  - [Usage with docker](#usage-with-docker)
+    - [PHP tools](#php-tools)
+      - [Composer](#composer)
+      - [Symfony console](#symfony-console)
+    - [Frontend](#frontend)
+      - [Yarn](#yarn)
+      - [Building assets](#building-assets)
+    - [Testing your code](#testing-your-code)
+
 ## Installation
 
 ### Prerequisites

@@ -1,6 +1,12 @@
-PHP 			= docker compose exec -u www-data app php
+DOCKER_COMPOSE 	= docker compose
+IS_DOCKER_COMPOSE_2 = $($(DOCKER_COMPOSE) ps 2> /dev/null; echo $$?)
+ifeq ($(IS_DOCKER_COMPOSE_2),1)
+	DOCKER_COMPOSE 	= docker-compose
+endif
+
+PHP 			= $(DOCKER_COMPOSE) exec -u www-data app php
 COMPOSER 		= $(PHP) /usr/bin/composer
-NODE 			= docker compose run --rm -u node node
+NODE 			= $(DOCKER_COMPOSE) run --rm -u node node
 YARN  			= $(NODE) yarn
 
 .DEFAULT_GOAL := help
@@ -15,23 +21,23 @@ help:
 ##
 
 build: 					 	## Build project images
-	@docker compose pull --parallel --quiet --ignore-pull-failures 2> /dev/null
-	@docker compose build --pull
+	@$(DOCKER_COMPOSE) pull --parallel --quiet --ignore-pull-failures 2> /dev/null
+	@$(DOCKER_COMPOSE) build --pull
 
-dc: 						## Shortcut to docker compose command (ex : make dc c="logs -f")
-	@docker compose ${c}
+dc: 						## Shortcut to $(DOCKER_COMPOSE) command (ex : make dc c="logs -f")
+	@$(DOCKER_COMPOSE) ${c}
 
 down: 						## Kill and removes containers and volumes
-	@docker compose kill
-	@docker compose down -v --remove-orphans
+	@$(DOCKER_COMPOSE) kill
+	@$(DOCKER_COMPOSE) down -v --remove-orphans
 
 install: build up 			## Initialize and start project
 
 logs:						## Show project containers logs
-	@docker compose logs -f ${c}
+	@$(DOCKER_COMPOSE) logs -f ${c}
 
 up:							## Start project containers
-	@docker compose up -d --force-recreate
+	@$(DOCKER_COMPOSE) up -d --force-recreate
 	@$(PHP) -r 'echo "Waiting for initial installation ..."; for(;;) { if (false === file_exists("/tmp/DOING_COMPOSER_INSTALL")) { echo " Ready !\n"; break; }}'
 
 .PHONY: build clean dc down install up
@@ -61,17 +67,17 @@ yarn:  						## Shortcut to use Yarn within node container (ex : make yarn c="ad
 ##
 
 create_test_db:
-	@docker compose run --rm database sh -c 'mysql -hdatabase -uroot -p$${MYSQL_ROOT_PASSWORD} -e "DROP DATABASE IF EXISTS $${MYSQL_DATABASE}_test; CREATE DATABASE $${MYSQL_DATABASE}_test; GRANT ALL ON $${MYSQL_DATABASE}_test.* TO \"$${MYSQL_USER}\""'
-	@docker compose run --rm -e APP_ENV=test app sh -c 'php -d memory_limit=-1 bin/console --no-interaction doctrine:schema:update --force --dump-sql'
+	@$(DOCKER_COMPOSE) run --rm database sh -c 'mysql -hdatabase -uroot -p$${MYSQL_ROOT_PASSWORD} -e "DROP DATABASE IF EXISTS $${MYSQL_DATABASE}_test; CREATE DATABASE $${MYSQL_DATABASE}_test; GRANT ALL ON $${MYSQL_DATABASE}_test.* TO \"$${MYSQL_USER}\""'
+	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app sh -c 'php -d memory_limit=-1 bin/console --no-interaction doctrine:schema:update --force --dump-sql'
 
 phpcs: 						## Run PHPCS QA
-	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --config=config/.php_cs.dist.php --dry-run --diff --verbose --allow-risky=yes
+	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --config=config/.php_cs.dist.php --dry-run --diff --verbose --allow-risky=yes
 
 phpunit: create_test_db		## Run phpunit tests suite
-	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.dist.xml
+	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.dist.xml
 
 psalm: 						## Run Psalm static code analysis
-	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml ${c}
+	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml ${c}
 
 quality: phpcs				## Run all quality checks
 

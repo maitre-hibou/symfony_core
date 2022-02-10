@@ -1,13 +1,9 @@
-DOCKER_COMPOSE 	= docker compose
-IS_DOCKER_COMPOSE_2 = $($(DOCKER_COMPOSE) ps 2> /dev/null; echo $$?)
+IS_DOCKER_COMPOSE_2 = $(docker compose ps 2> /dev/null; echo $$?)
 ifeq ($(IS_DOCKER_COMPOSE_2),1)
-	DOCKER_COMPOSE 	= docker-compose
+	DOCKER_COMPOSE = docker-compose
+else
+	DOCKER_COMPOSE = docker compose
 endif
-
-PHP 			= $(DOCKER_COMPOSE) exec -u www-data app php
-COMPOSER 		= $(PHP) /usr/bin/composer
-NODE 			= $(DOCKER_COMPOSE) run --rm -u node node
-YARN  			= $(NODE) yarn
 
 .DEFAULT_GOAL := help
 
@@ -74,7 +70,7 @@ phpcs: 						## Run PHPCS QA
 	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --config=config/.php_cs.dist.php --dry-run --diff --verbose --allow-risky=yes
 
 phpunit: create_test_db		## Run phpunit tests suite
-	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.dist.xml
+	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 bin/phpunit -c config/.phpunit.dist.xml
 
 psalm: 						## Run Psalm static code analysis
 	@$(DOCKER_COMPOSE) run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml ${c}

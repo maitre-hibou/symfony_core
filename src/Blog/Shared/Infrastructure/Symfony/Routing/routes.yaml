@@ -1,0 +1,3 @@
+blog:
+  path: /blog
+  controller: App\Blog\Shared\UI\Http\BlogController

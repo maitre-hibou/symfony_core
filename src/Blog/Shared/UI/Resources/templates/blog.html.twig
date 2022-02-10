@@ -1,12 +1,11 @@
 {% extends "base.html.twig" %}
 
+{% set menu_active = 'blog' %}
+
 {% block content %}
 <header class="container py-3 py-lg-4">
     <h1 class="d-flex justify-content-between">
         <span>The Blog</span>
-        <ul class="nav">
-            <li class="nav-item"><a href="{{ safe_url('blog_post_create') }}" class="btn btn-primary btn-sm">Create post</a></li>
-        </ul>
     </h1>
     <hr>
 </header>

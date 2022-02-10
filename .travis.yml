@@ -9,8 +9,14 @@ before_install:
   - sudo apt install php-ctype php-bcmath php-ctype php-curl php-intl php-opcache php-pdo php-simplexml php-zip symfony-cli
 install:
   - composer install
-script:
-  - symfony check:requirements
+jobs:
+  include:
+    - stage: Testing
+      script:
+        - php -d memory_limit=-1 vendor/bin/phpunit -c config/.phpunit.xml.dist
+    -
+      script:
+        - php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml
 # services:
 #   - docker
 # before_install:

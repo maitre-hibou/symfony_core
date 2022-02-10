@@ -7,6 +7,7 @@ ENV         COMPOSER_HOME=/usr/local/lib/composer
 RUN         echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sources.list.d/symfony-cli.list
 RUN         apt update && \
             apt install -y curl libcurl4-openssl-dev libicu-dev librabbitmq-dev libxml2-dev libzip-dev symfony-cli unzip wget zip
+RUN         curl -sfL $(curl -s https://api.github.com/repos/powerman/dockerize/releases/latest | grep -i /dockerize-$(uname -s)-$(uname -m)\" | cut -d\" -f4) | install /dev/stdin /usr/local/bin/dockerize
 
 RUN         usermod -u 1000 www-data && groupmod -g 1000 www-data
 
@@ -21,7 +22,8 @@ RUN         docker-php-ext-enable amqp apcu opcache
 
 RUN         mkdir -p $COMPOSER_HOME
 RUN         chown -R www-data:www-data $COMPOSER_HOME
-RUN         cd /tmp && /build/install_composer.sh
+WORKDIR     /tmp
+RUN         /build/install_composer.sh
 
 RUN         mkdir -p /app
 COPY        --chown=www-data:www-data . /app
@@ -31,4 +33,4 @@ VOLUME      /app
 WORKDIR     /app
 
 ENTRYPOINT  ["/build/entrypoint.sh"]
-CMD         ["symfony", "serve", "--port=8000"]
+CMD         ["dockerize", "--wait", "tcp://database:3306", "-timeout", "30s", "symfony", "serve", "--port=8000"]

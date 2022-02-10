@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: .docker/services/app/Dockerfile
+    depends_on:
+      - database
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_app.entrypoints=websecure"
@@ -18,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: .docker/services/database/Dockerfile
-    command: --default-authentication-plugin=mysql_native_password
+    command: --authentication_policy=mysql_native_password
     environment:
       - MYSQL_ROOT_PASSWORD=5ecr3t
       - MYSQL_DATABASE=${DB_DATABASE}

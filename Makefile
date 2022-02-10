@@ -73,6 +73,8 @@ phpunit: create_test_db		## Run phpunit tests suite
 psalm: 						## Run Psalm static code analysis
 	@docker compose run --rm -e APP_ENV=test app php -d memory_limit=-1 vendor/bin/psalm -c config/.psalm.xml ${c}
 
-tests: phpunit psalm 		## Run all tests and QA
+quality: phpcs				## Run all quality checks
 
-.PHONY: phpunit psalm tests
+tests: phpunit psalm 		## Run all tests suites
+
+.PHONY: create_test_db phpcs phpunit psalm quality tests

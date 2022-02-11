@@ -4,8 +4,9 @@
 
 {% block content %}
 <header class="container py-3 py-lg-4">
-    <h1 class="d-flex justify-content-between">
+    <h1 class="d-flex justify-content-between align-items-center">
         <span>The Blog</span>
+        <a href="{{ safe_url('blog_post_create') }}" class="btn btn-primary">Create post</a>
     </h1>
     <hr>
     <nav aria-label="breadcrumb">

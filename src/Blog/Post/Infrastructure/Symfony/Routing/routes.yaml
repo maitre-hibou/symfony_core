@@ -1,0 +1,4 @@
+blog_post_create:
+  path: /blog/post/create
+  methods: [GET, POST]
+  controller: App\Blog\Post\UI\Http\CreatePostController

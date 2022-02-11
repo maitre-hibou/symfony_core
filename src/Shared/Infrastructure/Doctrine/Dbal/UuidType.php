@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Shared\Infrastructure\Persistence\Doctrine;
+namespace App\Shared\Infrastructure\Doctrine\Dbal;
 
 use App\Shared\Domain\Utils\Strings;
 use App\Shared\Domain\ValueObject\Uuid;
-use App\Shared\Infrastructure\Doctrine\Dbal\CustomType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 use function Lambdish\Phunctional\last;

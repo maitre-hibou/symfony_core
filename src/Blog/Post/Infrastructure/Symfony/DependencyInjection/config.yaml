@@ -18,3 +18,15 @@ services:
 twig:
   paths:
     '%kernel.project_dir%/src/Blog/Post/UI/Resources/templates': 'BlogPost'
+
+doctrine:
+  dbal:
+    types:
+      post_id: App\Blog\Post\Infrastructure\Doctrine\Dbal\PostIdType
+  orm:
+    mappings:
+      App\Blog\Post\Domain:
+        is_bundle: false
+        type: xml
+        dir: '%kernel.project_dir%/src/Blog/Post/Infrastructure/Persistence/Doctrine'
+        prefix: 'App\Blog\Post\Domain'

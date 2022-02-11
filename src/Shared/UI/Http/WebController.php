@@ -21,11 +21,11 @@ abstract class WebController extends AbstractController implements WebController
         parent::__construct($queryBus, $commandBus);
     }
 
-    public function render(string $templateName, array $arguments = []): Response
+    public function render(string $templateName, array $arguments = [], int $httpStatusCode = Response::HTTP_OK): Response
     {
         return new Response(
             $this->twig->render($templateName, $arguments),
-            Response::HTTP_OK
+            $httpStatusCode
         );
     }
 

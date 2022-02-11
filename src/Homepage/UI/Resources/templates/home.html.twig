@@ -43,16 +43,20 @@
     <svg class="d-block mx-auto mb-1" style="fill: #0dcaf0 !important;" width="72" height="72"><use xlink:href="#symfony"></use></svg>
     <h1 class="display-5 fw-bold text-center">Hello World !</h1>
     <div class="col-lg-10 mx-auto">
-        <div class="d-flex flex-column justify-content-center align-items-center mx-auto">
-            <div class="img-thumbnail d-flex justify-content-center me-3" style="width: 100px; height: 100px;overflow:hidden; border-radius: 50%">
-                <img class="d-flex align-self-center" src="{{quote.avatar.value}}" alt="{{quote.by}}" height="150">
+        <div class="card mt-5">
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-center align-items-center mx-auto">
+                    <div class="img-thumbnail d-flex justify-content-center me-3" style="width: 80px; height: 80px;overflow:hidden; border-radius: 50%">
+                        <img class="d-flex align-self-center" src="{{quote.avatar.value}}" alt="{{quote.by}}" height="150">
+                    </div>
+                    <figure class="d-flex align-self-center flex-column justify-content-start mb-0">
+                        <blockquote class="blockquote">
+                          <p class="lead mb-0 font-sm"><i>{{quote.content}}</i></p>
+                        </blockquote>
+                        <figcaption class="blockquote-footer mb-0"><i>{{quote.by}}</i></figcaption>
+                      </figure>
+                </div>
             </div>
-            <figure class="d-flex align-self-center flex-column text-center mb-0">
-                <blockquote class="blockquote">
-                  <p class="lead mb-0"><i>{{quote.content}}</i></p>
-                </blockquote>
-                <figcaption class="blockquote-footer mb-0"><i>{{quote.by}}</i></figcaption>
-              </figure>
         </div>
     </div>
 </div>

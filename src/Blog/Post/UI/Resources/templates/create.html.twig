@@ -29,11 +29,6 @@
                 <textarea style="min-height: 15rem" class="form-control form-control-lg" placeholder="Post content ..."></textarea>
                 <label for="floatingInput">Post content</label>
             </div>
-
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Cover image</label>
-                <input class="form-control" type="file" id="formFile">
-              </div>
         </div>
         <div class="col-md-4">
             <h5>SEO</h5>
@@ -45,20 +40,6 @@
             </div>
             <div class="mb-3">
                 <textarea class="form-control form-control-sm" placeholder="Custom meta description" style="resize: none;"></textarea>
-            </div>
-
-            <h5>Categories</h5>
-            <div class="mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"  id="flexCheckDefault_0" checked disabled>
-                    <label class="form-check-label" for="flexCheckDefault_0">Uncategorized</label>
-                </div>
-                {% for i in 1..5 %}
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox"  id="flexCheckDefault_{{i}}">
-                    <label class="form-check-label" for="flexCheckDefault_{{i}}">Category {{i}}</label>
-                </div>
-                {% endfor %}
             </div>
             <hr>
             <div class="d-flex justify-content-between align-items-center">

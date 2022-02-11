@@ -5,10 +5,16 @@ else
 	DOCKER_COMPOSE = docker compose
 endif
 
+PHP 			= $(DOCKER_COMPOSE) exec -u www-data app php
+COMPOSER 		= $(PHP) /usr/bin/composer
+NODE 			= $(DOCKER_COMPOSE) run --rm -u node node
+YARN  			= $(NODE) yarn
+
 .DEFAULT_GOAL := help
 
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+
 .PHONY: help
 
 ##
@@ -20,7 +26,7 @@ build: 					 	## Build project images
 	@$(DOCKER_COMPOSE) pull --parallel --quiet --ignore-pull-failures 2> /dev/null
 	@$(DOCKER_COMPOSE) build --pull
 
-dc: 						## Shortcut to $(DOCKER_COMPOSE) command (ex : make dc c="logs -f")
+dc: 						## Shortcut to Docker Compose command (ex : make dc c="logs -f")
 	@$(DOCKER_COMPOSE) ${c}
 
 down: 						## Kill and removes containers and volumes

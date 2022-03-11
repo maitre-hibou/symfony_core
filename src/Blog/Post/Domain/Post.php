@@ -15,7 +15,7 @@ final class Post extends AggregateRoot
         private PostMetaTitle $metaTitle,
         private PostMetaDescription $metaDescription,
         private Timestamps $timestamps,
-        ) {
+    ) {
     }
 
     public static function create(

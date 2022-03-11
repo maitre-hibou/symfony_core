@@ -56,7 +56,7 @@ final class InMemoryQuoteRepository implements QuoteRepository
             'quote' => 'Every moment is a fresh beginning.',
             'by' => 'T.S. Eliot',
             'avatar' => 'https://i.imgur.com/AjK9HKF.png',
-        ],[
+        ], [
             'quote' => 'Everything you’ve ever wanted is on the other side of fear.',
             'by' => 'George Addair',
             'avatar' => 'https://i.imgur.com/0YdRYJm.png',

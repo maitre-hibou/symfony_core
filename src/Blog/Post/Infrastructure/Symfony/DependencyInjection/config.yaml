@@ -1,0 +1,32 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  _instanceof:
+    App\Shared\Infrastructure\Http\Controller:
+      tags: [ controller.service_arguments ]
+
+  App\Blog\Post\:
+    resource: '%kernel.project_dir%/src/Blog/Post/'
+    exclude:
+      - '%kernel.project_dir%/src/Blog/Post/Domain/'
+      - '%kernel.project_dir%/src/Blog/Post/UI/Resources/'
+
+twig:
+  paths:
+    '%kernel.project_dir%/src/Blog/Post/UI/Resources/templates': 'BlogPost'
+
+doctrine:
+  dbal:
+    types:
+      post_id: App\Blog\Post\Infrastructure\Doctrine\Dbal\PostIdType
+  orm:
+    mappings:
+      App\Blog\Post\Domain:
+        is_bundle: false
+        type: xml
+        dir: '%kernel.project_dir%/src/Blog/Post/Infrastructure/Persistence/Doctrine'
+        prefix: 'App\Blog\Post\Domain'

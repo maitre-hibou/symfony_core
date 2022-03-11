@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+
+{% set menu_active = 'blog' %}
+
+{% block content %}
+<header class="container py-3 py-lg-4">
+    <h1 class="d-flex justify-content-between align-items-center">
+        <span>The Blog</span>
+        <a href="{{ safe_url('blog_post_create') }}" class="btn btn-primary">Create post</a>
+    </h1>
+    <hr>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ safe_url('home') }}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Blog</li>
+        </ol>
+      </nav>
+</header>
+
+<section class="container">
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
+            <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+            <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <article class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success">Design</strong>
+                    <h3 class="mb-0">Post title</h3>
+                    <div class="mb-1 text-muted">Aug 01</div>
+                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img class="mw-100" src="https://picsum.photos/200/250" alt="">
+                </div>
+            </article>
+        </div>
+
+        <div class="col-md-6">
+            <article class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">Development</strong>
+                    <h3 class="mb-0">Post title</h3>
+                    <div class="mb-1 text-muted">Sep 13</div>
+                    <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <div class="d-flex overflow-hidden justify-content-center align-items-center" style="max-width: 200px; max-height: 250px">
+                        <img src="https://picsum.photos/id/1020/640/480" alt="">
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-8">
+            {% for i in 1..5 %}
+            <article class="blog-post position-relative">
+                <h2 class="blog-post-title">New feature</h2>
+                <p class="blog-post-meta">December 14, 2020 by <a href="#">Chris</a></p>
+
+                <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
+                <ul>
+                    <li>First list item</li>
+                    <li>Second list item with a longer description</li>
+                    <li>Third list item to close it out</li>
+                </ul>
+                <p>This is some additional paragraph placeholder content. It's a slightly shorter version of the other highly repetitive body text used throughout.</p>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="position-sticky pt-3" style="top: 3.5rem;">
+                <div class="p-4 mb-3 bg-light rounded">
+                    <h4 class="fst-italic">About</h4>
+                    <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p>
+                </div>
+
+                <div class="p-4">
+                    <h4 class="fst-italic">Topics</h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link" href="#">Design <i>(2)</i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Development <i>(5)</i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
